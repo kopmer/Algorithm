@@ -4,7 +4,7 @@ from collections import deque
 N, K = map(int, sys.stdin.readline().split())
 
 if N >= K:
-    print(N - K)  # 단순히 1씩 감소하면 되는 경우
+    sys.stdout.write(f"{N - K}\n")  # 단순히 1씩 감소하면 되는 경우
 else:
     queue = deque([(N, 0)])  # (현재 위치, 이동 횟수)
     visited = set()  # 중복 방문 방지
@@ -13,7 +13,7 @@ else:
         pos, steps = queue.popleft()
         
         if pos == K:
-            print(steps)
+            sys.stdout.write(f"{steps}\n")
             break
         
         if pos not in visited:

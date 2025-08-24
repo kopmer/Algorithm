@@ -7,12 +7,12 @@ import java.util.StringTokenizer;
 /*
  * [0][0] -> [N-1][N-1]이동
  * 도둑 루피칸을 지나면 소지금 잃는다(비용)
- * 잃는 금액을 최소로 하여 이동(상하좌우 이동)
+ * 잃는 금액을 최소로 하여 이동(상하좌우 이동) -> 다익스트라
  * 
  */
 public class Main {
 static int[][] map;
-static int[][] cost;
+static int[][] cost; //(0, 0) 에서해당 칸까지 오는데 드는 최소 비용
 static int[] dx = {-1,0,1,0};//시계방향
 static int[] dy = {0,1,0,-1};
 static int N, tc;
@@ -24,6 +24,7 @@ static int N, tc;
 			this.cost = cost;
 
 		}
+		//PQ에서 cost(누적 비용)가 작은 노드가 우선 나오도록
 		@Override
 		public int compareTo(node o) {
 			return this.cost - o.cost;
@@ -38,6 +39,7 @@ static int N, tc;
 			if(N == 0) break;
 			map = new int[N][N];
 			cost = new int[N][N];
+			
 			for(int i = 0; i < N; i++) {
 				Arrays.fill(cost[i], Integer.MAX_VALUE);
 			}
@@ -56,15 +58,18 @@ static int N, tc;
 			System.out.println("Problem " + tc + ": "+cost[N-1][N-1]);
 		}
 	}
-	public static void bfs() {
+	public static void bfs() { //다익스트라
 		node start = new node(0,0,map[0][0]);
 		cost[start.x][start.y] = start.cost;
+		
+		//PQ를 이용해 항상 현재까지 비용이 최소인 칸을 꺼내 확장
 		PriorityQueue<node> pq = new PriorityQueue<>();
 		pq.add(start);
 		while(!pq.isEmpty()) {
 			node now = pq.poll();
 			
-			if(now.cost > cost[now.x][now.y]) continue; //기존 루트비용보다 현재가중치가 더 크면 건너뜀(가지치기)
+			//기존 루트비용보다 현재가중치가 더 크면 건너뜀(가지치기)-> 이미 더 짧은 경로로 방문한 적 있으면 무시
+			if(now.cost > cost[now.x][now.y]) continue; 
 			
 			for(int i = 0; i < 4; i++) {
 				
@@ -72,10 +77,11 @@ static int N, tc;
 				int ny = now.y + dy[i];
 				if(nx < 0 || ny < 0 || nx >= N || ny >= N) continue;
 				
+				// 새로운 경로 비용 = 현재칸까지 최소비용 + 다음칸에서 잃는 금액
 				int newCost = cost[now.x][now.y] + map[nx][ny];
 				if(newCost < cost[nx][ny]) {
 					cost[nx][ny] = newCost;
-					pq.add(new node(nx,ny,map[nx][ny]));
+					pq.add(new node(nx,ny,newCost));
 				}
 			}
 			

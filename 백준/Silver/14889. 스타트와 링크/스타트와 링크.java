@@ -51,7 +51,7 @@ public class Main {
 			int Asum = 0; int Bsum = 0;
 			for(int i = 0; i < N/2; i++) {
 				for(int j = 0; j < N/2; j++) {
-					if(i == 0 && j == 0) continue;
+					if(i == j) continue;
 					Asum += S[teamA[i]][teamA[j]];
 					Bsum += S[teamB[i]][teamB[j]];
 				}

@@ -9,7 +9,6 @@ public class Main {
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int N = Integer.parseInt(br.readLine());
-		int[] isBuilding = new int[1000001]; //x에 있는 건물의 높이
 		Stack<Integer> s = new Stack<>();
 		int BuildingCnt = 0;
 		for(int i = 0; i < N; i ++) {
@@ -29,9 +28,7 @@ public class Main {
 			}
 			
 		}
-		
 		while(!s.isEmpty()) {
-//			System.out.println(s.peek());
 			int y = s.pop();
 			if(y == 0) continue; // 0은 왜들어가는데;;
 			BuildingCnt++;
@@ -40,3 +37,4 @@ public class Main {
 
 	}
 }
+

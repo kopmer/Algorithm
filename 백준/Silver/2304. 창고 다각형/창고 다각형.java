@@ -1,7 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Stack;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -24,7 +24,7 @@ public class Main {
 		isRoof = new boolean[1001]; // 1 based
 		int sum = 0;
 		
-		Stack<int[]> s = new Stack<>();
+		ArrayList<int[]> s = new ArrayList<>();
 
 		for(int i = 0; i < N; i++) {
 			StringTokenizer st = new StringTokenizer(br.readLine());
@@ -60,13 +60,10 @@ public class Main {
 					left = connectN;
 					right = nowL;
 				}
-//				System.out.println("left: "+ left + "| right: "+ right + "| nowH: " + nowH);
 				for(int i = left; i <= right; i++) {
 					isRoof[i] = true;
 				}
 				sum += (right - left) * nowH;
-//				System.out.println("right - left: " + (right - left) + "| wide :" + (right - left) * nowH);
-
 			}
 		}
 		System.out.println(sum);
@@ -89,3 +86,4 @@ public class Main {
 	}
 
 }
+
